@@ -1,8 +1,12 @@
-# node-js-getting-started
+# CSV Importer API
 
 A barebones Node.js app using [Express 4](http://expressjs.com/).
 
-This application supports the [Getting Started with Node on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs) article - check it out.
+This application was built using the Getting Started with NodeJS on Heroku repository.
+
+## Developer Notes
+
+Hosted on Heroku, it serves as the rest endpoint for the front end [CSV Importer](http://github.com/rcheuk/csv-importer/).
 
 ## Running Locally
 
