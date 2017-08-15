@@ -74,7 +74,7 @@ var dbTransactions = {
         return !!err
       }
 
-      let query = 'SELECT * FROM data WHERE object_id = $1';
+      let query = 'SELECT object_id, object_type, timestamp, object_changes FROM data WHERE object_id = $1';
       let values = [id];
       client.query(query, values, (err, result) =>{
         done();
@@ -98,7 +98,7 @@ var dbTransactions = {
         return !!err
       }
 
-      let query = 'SELECT * FROM data WHERE timestamp = $2';
+      let query = 'SELECT object_id, object_type, timestamp, object_changes FROM data WHERE timestamp = cast($2 as timestamp)';
       let values = [new Date(timestamp * 1000)];
       client.query(query, values, (err, result) =>{
         done();

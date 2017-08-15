@@ -36,7 +36,7 @@ app.post('/api/upload', function(req, res, next) {
     });
     req.busboy.on('finish', function() {
       res.writeHead(200, { 'Connection': 'close' });
-      res.end("Import Complete!");
+      res.end('Import Complete!');
     });
 
     next();
