@@ -4,7 +4,8 @@ var Router = express.Router();
 var busboy = require('connect-busboy');
 
 var fs = require('fs');
-
+var search = require('./api/search.js');
+var processImport = require('./utils.js');
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -25,6 +26,7 @@ app.get('/', function(request, response) {
   response.render('pages/index');
 });
 
+app.use('/api', search);
 app.post('/api/upload', function(req, res, next) {
   var fstream;
     req.pipe(req.busboy);
@@ -32,10 +34,11 @@ app.post('/api/upload', function(req, res, next) {
         console.log("Uploading: " + filename); 
         fstream = fs.createWriteStream(__dirname + '/uploads/' + filename);
         file.pipe(fstream);
+        processImport.loadToDatabase(__dirname + '/uploads/' + filename);
     });
     req.busboy.on('finish', function() {
       res.writeHead(200, { 'Connection': 'close' });
-      res.end("That's all folks!");
+      res.end("Import Complete!");
     });
 
     next();
@@ -44,3 +47,4 @@ app.post('/api/upload', function(req, res, next) {
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
 });
+
