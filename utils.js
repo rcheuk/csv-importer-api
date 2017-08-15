@@ -8,8 +8,7 @@ var processImport = {
   loadToDatabase: (filename) => {
     csv({
       trim:true,
-      escape: true,
-      
+      escape: '"',
     })
     .fromFile(filename)
     .on('json',(data)=>{

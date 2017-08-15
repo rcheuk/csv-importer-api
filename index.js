@@ -7,6 +7,8 @@ var fs = require('fs');
 var search = require('./api/search.js');
 var processImport = require('./utils.js');
 
+require ('newrelic');
+
 app.set('port', (process.env.PORT || 5000));
 
 app.use(function(req, res, next) {
