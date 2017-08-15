@@ -17,7 +17,6 @@ var dbTransactions = {
         }
         return !!err
       }
-      console.log('json', data.object_changes);
       client.query('BEGIN', (err) => {
         if (shouldAbort(err)) return
           const insertRow = 'INSERT INTO data(object_id, object_type, timestamp, object_changes) VALUES ($1, $2, cast($3 as timestamp), $4)'

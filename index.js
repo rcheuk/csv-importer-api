@@ -4,8 +4,8 @@ var Router = express.Router();
 var busboy = require('connect-busboy');
 
 var fs = require('fs');
-var search = require('./api/search.js');
-var processImport = require('./utils.js');
+var search = require('./api/search');
+var upload = require('./api/import');
 
 require ('newrelic');
 
@@ -25,22 +25,7 @@ app.get('/', function(request, response) {
 });
 
 app.use('/api', search);
-app.post('/api/upload', function(req, res, next) {
-  var fstream;
-    req.pipe(req.busboy);
-    req.busboy.on('file', function (fieldname, file, filename) {
-        console.log("Uploading: " + filename); 
-        fstream = fs.createWriteStream(__dirname + '/uploads/' + filename);
-        file.pipe(fstream);
-        processImport.loadToDatabase(__dirname + '/uploads/' + filename);
-    });
-    req.busboy.on('finish', function() {
-      res.writeHead(200, { 'Connection': 'close' });
-      res.end('Import Complete!');
-    });
-
-    next();
-});
+app.use('/api', upload);
 
 app.listen(app.get('port'), function() {
   console.log('Node app is running on port', app.get('port'));
